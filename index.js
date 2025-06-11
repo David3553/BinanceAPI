@@ -1,9 +1,13 @@
 const axios = require('axios');
 
-axios.get('https://api.binance.com/api/v3/time')
+const symbol = 'BTCUSDT'; // kannst du ändern zu z. B. ETHUSDT
+
+axios.get(`https://fapi.binance.com/fapi/v1/premiumIndex?symbol=${symbol}`)
   .then(res => {
-    console.log('Binance API erreichbar:', res.data);
+    const data = res.data;
+    const rate = parseFloat(data.lastFundingRate) * 100;
+    console.log(`Funding Rate für ${symbol}: ${rate.toFixed(4)} %`);
   })
   .catch(err => {
-    console.error('Fehler:', err.message);
+    console.error('Fehler beim Abruf:', err.message);
   });
